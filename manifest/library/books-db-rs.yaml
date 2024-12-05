@@ -41,6 +41,7 @@ kind: Service
 metadata:
   name: books-db-svc
 spec:
+  type: ClusterIP
   selector:
     app: books-db
   ports:
