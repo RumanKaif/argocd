@@ -29,10 +29,10 @@ spec:
             value: usersdb
         resources:                    # Corrected from 'resource' to 'resources'
           requests:
-            memory: 24Mi
-            cpu: 100m
-          limits:
             memory: 128Mi
+            cpu: 250m
+          limits:
+            memory: 256Mi
             cpu: 500m
 
 ---
