@@ -22,16 +22,16 @@ spec:
           image: shaikkhajaibrahim/libuserssvc:1.0
           env:
           - name: DATABASE_URL
-            value: “postgresql://:@:5432/“
+            value: "postgresql://myuser:mypassword@mydbhost:5432/mydatabase"
           - name: SECRET_KEY
-            value: ‘YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k’
+            value: "YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k"
           resources:
             requests:
-              memory: 128Mi
-              cpu: 250m
+              memory: "128Mi"
+              cpu: "250m"
             limits:
-              memory: 256Mi
-              cpu: 500m
+              memory: "256Mi"
+              cpu: "500m"
 
 ---
 apiVersion: v1
@@ -45,8 +45,3 @@ spec:
   ports:
     - port: 8000
       targetPort: 8000
-    
-  
-
-    
-   

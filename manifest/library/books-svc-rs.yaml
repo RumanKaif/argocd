@@ -2,51 +2,46 @@
 apiVersion: apps/v1
 kind: ReplicaSet 
 metadata: 
-  name: books-svc 
+  name: usr-svc 
   labels:
     env: dev 
-    app: books-svc
+    app: usr-svc
 spec:
   minReadySeconds: 5
   replicas: 1
   selector:
     matchLabels:
-      app: books-svc
+      app: usr-svc
   template:
     metadata:
       labels:
-        app: books-svc
+        app: usr-svc
     spec:
       containers:
         - name: usr
           image: shaikkhajaibrahim/libuserssvc:1.0
           env:
           - name: DATABASE_URL
-            value: “postgresql://:@:5432/“
+            value: "postgresql://myuser:mypassword@mydbhost:5432/mydatabase"
           - name: SECRET_KEY
-            value: ‘YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k’
+            value: "YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k"
           resources:
             requests:
-              memory: 128Mi
-              cpu: 250m
+              memory: "128Mi"
+              cpu: "250m"
             limits:
-              memory: 256Mi
-              cpu: 500m
+              memory: "256Mi"
+              cpu: "500m"
 
 ---
 apiVersion: v1
 kind: Service 
 metadata:
-  name: books-svc
+  name: usr-svc
 spec:
   type: ClusterIP
   selector:
-    app: books-svc
+    app: usr-svc
   ports:
     - port: 8000
       targetPort: 8000
-    
-  
-
-    
-   
