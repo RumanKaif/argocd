@@ -1,0 +1,37 @@
+---
+apiVersion: v1 
+kind: ConfigMap 
+metadata:
+  name: usr-db
+data:
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: usersdb
+
+---
+apiVersion: v1
+kind: ConfigMap 
+metadata:
+  name: books-db
+data: 
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: password
+  POSTGRES_DB: booksdb
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: usr-svc
+data:
+  DATABASE_URL: “postgresql://:@:5432/“
+  SECRET_KEY: ‘YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k’
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: books-svc
+data:
+  DATABASE_URL: “postgresql://:@:5432/“
+  SECRET_KEY: ‘YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k’

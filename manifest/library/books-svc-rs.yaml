@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet 
+metadata: 
+  name: books-svc 
+  labels:
+    env: dev 
+    app: books-svc
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: books-svc
+  template:
+    metadata:
+      labels:
+        app: books-svc
+    spec:
+      containers:
+        - name: usr
+          image: shaikkhajaibrahim/libuserssvc:1.0
+          env:
+          - name: DATABASE_URL
+            value: “postgresql://:@:5432/“
+          - name: SECRET_KEY
+            value: ‘YtDEVWnL35aAIP-5yxeLjAZ49R920-mMNDfwPyWULu63HFsYzo0f-LO2InxC8eu428k’
+          resources:
+            requests:
+              memory: 24Mi
+              cpu: 128m
+            limits:
+              memory: 128Mi
+              cpu: 500m
+
+---
+apiVersion: v1
+kind: Service 
+metadata:
+  name: books-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: books-svc
+  ports:
+    - port: 8000
+      targetPort: 8000
+    
+  
+
+    
+   

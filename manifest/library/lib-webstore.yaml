@@ -1,0 +1,48 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet 
+metadata: 
+  name: lib-webstore-rs
+  labels:
+    env: dev 
+    app: lib-webstore
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lib-webstore
+  template:
+    metadata:
+      labels:
+        app: lib-webstore
+    spec:
+      containers:
+        - name: lib-webstore
+          image: shaikkhajaibrahim/libwebstore:1.0
+          env:
+          - name: REACT_APP_BACKEND_API_URL
+            value: http://:8000/api/v1
+          - name: REACT_APP_USERS_API_URLL
+            value: http://:8000/api/v1/user
+          resources:
+            requests:
+              memory: 24Mi
+              cpu: 128m 
+            limits:
+              memory: 128Mi
+              cpu: 500m 
+  
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: lib-webstore-svc
+spec:
+  type: LoadBalancer
+  selector:
+    app: lib-webstore
+  ports:
+    - port: 3000
+      targetPort: 3000
+            

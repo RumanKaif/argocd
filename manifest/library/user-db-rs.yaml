@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet 
+metadata: 
+  name: user-db
+  labels:
+    env: dev
+    app: user-db
+spec:
+  minReadySeconds: 5
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-db
+  template:
+    metadata:
+      labels:
+        app: user-db
+    spec:
+      containers:                     # Corrected from 'container' to 'containers'
+      - image: postgres:15-alpine
+        name: user-db
+        env: 
+          - name: POSTGRES_USER
+            value: user
+          - name: POSTGRES_PASSWORD
+            value: password
+          - name: POSTGRES_DB
+            value: usersdb
+        resources:                    # Corrected from 'resource' to 'resources'
+          requests:
+            memory: 24Mi
+            cpu: 100m
+          limits:
+            memory: 128Mi
+            cpu: 500m
+
+---
+apiVersion: v1 
+kind: Service 
+metadata:
+  name: user-db-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: user-db
+  ports:
+    - port: 5432                   # Port exposed by the service
+      targetPort: 5432             # Port on the container that receives traffic
